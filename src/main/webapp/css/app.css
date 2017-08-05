@@ -4,7 +4,12 @@
 	margin-top: 30px;
 }
 
-button.accordion {
+.monetary {
+	color: Green;
+	font-weight: bold;
+}
+
+button.module {
 	background-color: #eee;
 	color: #444;
 	cursor: pointer;
@@ -17,11 +22,11 @@ button.accordion {
 	transition: 0.4s;
 }
 
-button.accordion.active, button.accordion:hover {
+button.module.active, button.module:hover {
 	background-color: #ddd;
 }
 
-button.accordion:after {
+button.module:after {
 	content: '\002B';
 	color: #777;
 	font-weight: bold;
@@ -29,7 +34,7 @@ button.accordion:after {
 	margin-left: 5px;
 }
 
-button.accordion.active:after {
+button.module.active:after {
 	content: "\2212";
 }
 

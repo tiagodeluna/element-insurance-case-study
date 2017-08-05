@@ -65,6 +65,8 @@ public class Insurance {
 		for(Module m : this.modules) {
 			this.tariff = this.tariff + (m.getCoverage()*m.getRisk());
 		}
+		
+		this.tariff = ((int) this.tariff*100) / 100;
 	}
 	@Override
 	public String toString() {

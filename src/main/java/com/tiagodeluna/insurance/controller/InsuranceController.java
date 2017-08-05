@@ -32,15 +32,14 @@ public class InsuranceController {
 	@GET
 	@Path("/new")
 	public Insurance getNew() {
-		System.out.println("Instantiating object...");
+		System.out.println("Instantiating...");
 		return insuranceService.newInsurance();
 	}
 
 	@POST
 	public Insurance save(Insurance insurance){
-		System.out.println("Saving object...");
+		System.out.println("Saving...");
 		insuranceService.save(insurance);
-		insuranceService.findAll();
 		insurance = insuranceService.newInsurance();
 		return insurance;
 	}

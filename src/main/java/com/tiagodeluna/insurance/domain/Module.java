@@ -1,15 +1,17 @@
 package com.tiagodeluna.insurance.domain;
 
+import org.springframework.data.annotation.Transient;
+
 public class Module {
 
-//	@Id
-//	@ObjectId
-//	private String id;
 	private ModuleType type;
 	private String name;
 	private double coverage;
 	private double risk;
-	
+	@Transient
+	private double minCoverage;
+	@Transient
+	private double maxCoverage;
 	
 	public Module() {
 		super();
@@ -24,16 +26,6 @@ public class Module {
 		this.coverage = coverage;
 		this.risk = risk;
 	}
-	
-//	@ObjectId
-//	public String getId() {
-//		return id;
-//	}
-
-//	@ObjectId
-//	public void setId(String id) {
-//		this.id = id;
-//	}
 
 	public String getName() {
 		return name;
@@ -67,6 +59,22 @@ public class Module {
 		this.type = type;
 	}
 	
+	public double getMinCoverage() {
+		return minCoverage;
+	}
+
+	public void setMinCoverage(double minCoverage) {
+		this.minCoverage = minCoverage;
+	}
+
+	public double getMaxCoverage() {
+		return maxCoverage;
+	}
+
+	public void setMaxCoverage(double maxCoverage) {
+		this.maxCoverage = maxCoverage;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Module >> Name: %s, Type: %s, Risk: %s",
