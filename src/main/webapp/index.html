@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="registration">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Insurance Registration</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="form-content" ng-controller="InsuranceController">
+					<h1>Insurance Registration</h1>
+					<form name="formulario" ng-submit="save()">
+						<div class="form-group">
+							<label for="client">Client*</label>
+							<input type="text"
+								class="form-control" id="client"
+								placeholder="Enter the client's name" maxlength="25" required
+								ng-model="insurance.clientName">
+						</div>
+
+						<div ng-repeat="module in insurance.modules">
+							<button class="accordion active">{{module.name}}</button>
+							<div class="panel">
+								<div class="form-group has-feedback">
+									<label for="{{module.type}}">Coverage</label>
+									<input type="range" id="{{module.type}}" class="form-control" min="0"
+										max="20000" step="1" ng-change="calculateTariff()"
+										ng-model="module.coverage" />
+								</div>
+							</div>
+						</div>
+
+						<p class="tariff">Tariff: $ {{insurance.tariff}}</p>
+
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="js/app.js"></script>
+
+</body>
+
+</html>
