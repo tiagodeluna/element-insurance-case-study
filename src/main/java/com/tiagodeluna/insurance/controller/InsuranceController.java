@@ -1,6 +1,8 @@
 package com.tiagodeluna.insurance.controller;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,6 +18,8 @@ import com.tiagodeluna.insurance.service.InsuranceService;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class InsuranceController {
+	
+	private static final Logger LOGGER = Logger.getLogger(InsuranceController.class.getName());
 
 	private InsuranceService insuranceService;
 
@@ -32,23 +36,27 @@ public class InsuranceController {
 	@GET
 	@Path("/new")
 	public Insurance getNew() {
-		System.out.println("Instantiating...");
+		LOGGER.log(Level.FINE, "Instantiating new Insurance");
 		return insuranceService.newInsurance();
 	}
 
 	@POST
 	public Insurance save(Insurance insurance){
-		System.out.println("Saving...");
+		LOGGER.log(Level.FINE, "Saving Insurance");
 		insuranceService.save(insurance);
-		insurance = insuranceService.newInsurance();
-		return insurance;
+		return insuranceService.newInsurance();
 	}
 	
 	@POST
 	@Path("/calculate")
 	public Insurance calculate(Insurance insurance){
+		LOGGER.log(Level.FINE, "Calculating Insurance tariff");
 		insurance.calculateTariff();
-		System.out.println("Calculating tariff...");
 		return insurance;
 	}
+
+	public void setInsuranceService(InsuranceService insuranceService) {
+		this.insuranceService = insuranceService;
+	}
+	
 }

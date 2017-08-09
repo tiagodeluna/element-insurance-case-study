@@ -10,7 +10,7 @@
 }
 
 button.module {
-	background-color: #eee;
+	background-color: #e6e9ed;
 	color: #444;
 	cursor: pointer;
 	padding: 18px;
@@ -19,6 +19,7 @@ button.module {
 	text-align: left;
 	outline: none;
 	font-size: 15px;
+	font-weight: bold;
 	transition: 0.4s;
 }
 
@@ -26,22 +27,18 @@ button.module.active, button.module:hover {
 	background-color: #ddd;
 }
 
-button.module:after {
-	content: '\002B';
-	color: #777;
-	font-weight: bold;
+button.module .icon {
 	float: right;
-	margin-left: 5px;
+	padding-top: 2px;
 }
-
-button.module.active:after {
-	content: "\2212";
-}
+/* button.module .icon.glyphicon-ok { */
+/* 	color: Green; */
+/* } */
+/* button.module .icon.glyphicon-remove { */
+/* 	color: Red; */
+/* } */
 
 div.panel {
 	padding: 0 18px;
 	background-color: white;
-/* 	max-height: 0; */
-/* 	overflow: hidden; */
-/* 	transition: max-height 0.2s ease-out; */
 }

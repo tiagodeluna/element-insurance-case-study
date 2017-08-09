@@ -4,40 +4,80 @@
     angular.module('registration', [])
         .controller('InsuranceController', function ($scope, $http) {
 
-            $scope.insurance = {clientName: '', tariff: 0, modules: []};
-            $scope.insurances = [];
+        	$scope.alert = {type: '', strong: '', msg: ''};
+        	$scope.showAlert = false;
 
+        	//Close alert message
+        	$scope.closeAlert = function() {
+        	   $scope.showAlert = false;
+        	};
+        	
+            //Update the status of each module
+            $scope.setStatus = function (modules) {
+                for (var i = 0, len = modules.length; i < len; i++) {
+                	$scope.changeModuleStatus(modules[i], modules[i].active);
+                }
+            };
+
+            //Turn module active/inactive
+            $scope.changeModuleStatus = function (module, status) {
+            	module.active = status;
+            	if (status) {
+                    module.icon = 'glyphicon-ok';
+                }else {
+                	module.icon = 'glyphicon-remove';
+                }
+            	
+            	$scope.calculateTariff();
+            };
+            
+            //Open form with a new insurance
             $http.get('api/insurance/new').then(function (response) {
                 $scope.insurance = response.data;
+                $scope.setStatus($scope.insurance.modules);
             });
-            //NEW
-            //$http.get('api/insurance').then(function (response) {
-            //    $scope.insurances = response.data;
-            //});
-
-            //OLD
-            //$scope.save = function () {
-            //    $http.post('api/user', $scope.user).then(function (response) {
-            //        $scope.users.push(response.data);
-            //    });
-
-            //    $scope.user = {username: '', password: ''};
-            //    $scope.statusPassword = {};
-            //};
-
+            
+            //Persist the insurance
             $scope.save = function () {
-                $http.post('api/insurance', $scope.insurance).then(function (response) {
-                    //$scope.insurances.push(response.data);
-                	$scope.insurance = response.data;
-                });
+                if ($scope.insurance.tariff > 0) {
+                	//Save insurance
+	                $http.post('api/insurance', $scope.insurance).then(function (response) {
+                    	//Prepare a new insurance to be registered
+                    	$scope.insurance = response.data;
+                        $scope.setStatus($scope.insurance.modules);
+                	});
+	                //Prepare success message
+                	$scope.alert = {type: 'alert-success', strong: 'Done!',
+                			msg: 'Insurance has been successfully registered.'};
+                } else {
+                	//Prepare error message
+                	$scope.alert = {type: 'alert-danger', strong: 'Oops!',
+                			msg: 'Tariff must be greater than $0.'};
+                }
+                
+            	$scope.showAlert=true;
             };
 
+            //Calculate tariff
             $scope.calculateTariff = function () {
             	$http.post('api/insurance/calculate', $scope.insurance).then(function (response) {
-            		$scope.insurance = response.data;
+            		$scope.insurance.tariff = response.data.tariff;
                 });
-
             };
+
+            //Get all insurances
+            $scope.list = function () {
+	            $http.get('api/insurance').then(function (response) {
+	                $scope.insurances = response.data;
+	            });
+            };
+
+            //Get all insurances
+//            $scope.clear = function () {
+//	            $http.get('api/insurance').then(function (response) {
+//	                $scope.insurances = response.data;
+//	            });
+//            };
         });
 
 })();

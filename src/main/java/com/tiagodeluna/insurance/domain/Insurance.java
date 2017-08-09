@@ -63,7 +63,9 @@ public class Insurance {
 		this.tariff = 0;
 		
 		for(Module m : this.modules) {
-			this.tariff = this.tariff + (m.getCoverage()*m.getRisk());
+			if (m.isActive()) {
+				this.tariff = this.tariff + (m.getCoverage()*m.getRisk());
+			}
 		}
 		
 		this.tariff = ((int) this.tariff*100) / 100;

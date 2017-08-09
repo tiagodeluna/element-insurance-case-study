@@ -14,51 +14,86 @@
 </head>
 
 <body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8">
+			<div class="form-content" ng-controller="InsuranceController">
+				<section id="insurance-form">
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="form-content" ng-controller="InsuranceController">
-					<h1>Insurance Registration</h1>
+					<!-- Success message -->
+					<div class="alert {{alert.type}}" ng-show="showAlert">
+						<button type="button" class="close" data-ng-click="closeAlert()">×</button>
+						<strong>{{alert.strong}}</strong> {{alert.msg}}
+					</div>
+					
+					 <!-- Form elements -->
+					<h1>New Insurance</h1>
 					<form name="formulario" ng-submit="save()">
 						<div class="form-group">
 							<label for="client">Client*</label>
 							<input type="text"
 								class="form-control" id="client"
-								placeholder="Enter the client's name" maxlength="25" required
+								placeholder="Enter the client name" maxlength="25" required
 								ng-model="insurance.clientName">
 						</div>
 
-						<div ng-repeat="module in insurance.modules">
-							<button class="module active">{{module.name}} <span class="monetary">[${{module.coverage}}]</span></button>
-							<div class="panel">
-								<div class="form-group has-feedback">
-									<label for="{{module.type}}">Coverage</label>
-									<input type="range" id="{{module.type}}" class="form-control" min="{{module.minCoverage}}"
-										max="{{module.maxCoverage}}" step="1" ng-change="calculateTariff()"
-										ng-model="module.coverage" />
+						<div class="form-group" ng-repeat="module in insurance.modules">
+							<button type="button" class="module" ng-click="changeModuleStatus(module, !module.active)">
+								{{module.name}}<span class="icon glyphicon {{module.icon}}"></span>
+							</button>
+							
+							<div class="panel" ng-if="module.active">
+								<div class="form-group">
+									<label for="{{module.type}}">Coverage 
+										<span class="monetary">[${{module.coverage}}]</span></label>
+									<input type="range" id="{{module.type}}" class="form-control"
+										min="{{module.minCoverage}}" max="{{module.maxCoverage}}" step="10"
+										ng-change="calculateTariff()" ng-model="module.coverage" />
 								</div>
 							</div>
 						</div>
 
-						<p class="monetary">Tariff: ${{insurance.tariff}}</p>
+						<h4 class="monetary">Tariff: ${{insurance.tariff}}</h4>
 
 						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="button" class="btn" ng-click="list()">List Insurances</button>
+						<button type="button" class="btn" ng-click="clear()">Clear</button>
 					</form>
-					
-				</div>
+				</section>
+				<br />
+				
+				<!-- List of data -->
+				<section id="insurance-list" ng-show="insurances.length > 0">
+					<h1>List Insurances</h1>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Client</th>
+								<th>Coverage</th>
+								<th>Tariff</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Aqui serão exibidos os dados do usuários cadastrados -->
+							<tr ng-repeat="insurance in insurances">
+								<td>{{insurance.clientName}}</td>
+								<td>
+									<span ng-repeat="module in insurance.modules"> {{module.name}}=${{module.coverage}} </span>
+								</td>
+								<td>${{insurance.tariff}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-	<script src="js/app.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="js/app.js"></script>
 </body>
 
 </html>

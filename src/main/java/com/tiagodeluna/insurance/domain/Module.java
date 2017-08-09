@@ -12,19 +12,41 @@ public class Module {
 	private double minCoverage;
 	@Transient
 	private double maxCoverage;
+	@Transient
+	private boolean active;
 	
 	public Module() {
 		super();
-		this.coverage = 0;
-		this.risk = 0;
 	}
 
-	public Module(String name, ModuleType type, double coverage, double risk) {
+	/**
+	 * Constructor with non-transient fields.
+	 * @param type
+	 * @param name
+	 * @param risk
+	 * @param coverage
+	 */
+	public Module(ModuleType type, String name, double risk, double coverage) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.coverage = coverage;
 		this.risk = risk;
+		this.active = true;
+	}
+
+	/**
+	 * Constructor that sets all fields.
+	 * @param type
+	 * @param name
+	 * @param risk
+	 * @param minCoverage
+	 * @param maxCoverage
+	 */
+	public Module(ModuleType type, String name, double risk, double minCoverage, double maxCoverage) {
+		this(type, name, risk, minCoverage);
+		this.minCoverage = minCoverage;
+		this.maxCoverage = maxCoverage;
 	}
 
 	public String getName() {
@@ -73,6 +95,14 @@ public class Module {
 
 	public void setMaxCoverage(double maxCoverage) {
 		this.maxCoverage = maxCoverage;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override
