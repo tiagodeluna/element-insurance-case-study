@@ -4,6 +4,8 @@ Case Study developed as part of a coding challenge.
 ## Tools
 * Eclipse Mars
 * Kanbanchi
+* Git
+* MongoDB Atlas
 
 ## Technologies
 * Java 8
@@ -11,7 +13,7 @@ Case Study developed as part of a coding challenge.
 * AngularJS / Bootstrap
 * JAX-RS with Jersey
 * Jackson
-* MongoDB / MongoDB Atlas
+* MongoDB
 * Tomcat
 
 ## Guidelines to Execute Application
