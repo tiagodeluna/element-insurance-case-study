@@ -17,6 +17,6 @@ Case Study developed as part of a coding challenge.
 * Tomcat
 
 ## Guidelines to Execute Application
-1. Download de source-code.
+1. Download the source-code.
 2. Build with Maven: *mvn clean install*.
 3. Run: *mvn tomcat:run*.
