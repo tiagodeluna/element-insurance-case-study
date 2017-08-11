@@ -10,13 +10,14 @@ Case Study developed as part of a coding challenge.
 ## Technologies
 * Java 8
 * Maven
-* AngularJS / Bootstrap
-* JAX-RS with Jersey
+* AngularJS / Bootstrap / JQuery
+* Spring Framework
 * Jackson
 * MongoDB
+* JUnit / EasyMock
 * Tomcat
 
 ## Guidelines to Execute Application
 1. Download the source-code.
 2. Build with Maven: *mvn clean install*.
-3. Run: *mvn tomcat:run*.
+3. Run MyApplication.java as a Java Application.
