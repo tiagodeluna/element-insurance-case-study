@@ -4,6 +4,7 @@
     angular.module('registration', [])
         .controller('InsuranceController', function ($scope, $http) {
 
+        	//Prepare alert properties
         	$scope.alert = {type: '', strong: '', msg: ''};
         	$scope.showAlert = false;
 
@@ -32,7 +33,7 @@
             };
             
             //Open form with a new insurance
-            $http.get('api/insurance/new').then(function (response) {
+            $http.get('api/new').then(function (response) {
                 $scope.insurance = response.data;
                 $scope.setStatus($scope.insurance.modules);
             });
@@ -41,7 +42,7 @@
             $scope.save = function () {
                 if ($scope.insurance.tariff > 0) {
                 	//Save insurance
-	                $http.post('api/insurance', $scope.insurance).then(function (response) {
+	                $http.post('api', $scope.insurance).then(function (response) {
                     	//Prepare a new insurance to be registered
                     	$scope.insurance = response.data;
                         $scope.setStatus($scope.insurance.modules);
@@ -60,24 +61,24 @@
 
             //Calculate tariff
             $scope.calculateTariff = function () {
-            	$http.post('api/insurance/calculate', $scope.insurance).then(function (response) {
+            	$http.post('api/calculate', $scope.insurance).then(function (response) {
             		$scope.insurance.tariff = response.data.tariff;
                 });
             };
 
             //Get all insurances
             $scope.list = function () {
-	            $http.get('api/insurance').then(function (response) {
+	            $http.get('api').then(function (response) {
 	                $scope.insurances = response.data;
 	            });
             };
 
-            //Get all insurances
-//            $scope.clear = function () {
-//	            $http.get('api/insurance').then(function (response) {
-//	                $scope.insurances = response.data;
-//	            });
-//            };
+            //Delete all insurances
+            $scope.clear = function () {
+            	$http.delete('api').then(function (response) {
+            		$scope.list();
+                });
+            };
         });
 
 })();

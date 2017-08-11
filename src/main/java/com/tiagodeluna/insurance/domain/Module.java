@@ -12,7 +12,6 @@ public class Module {
 	private double minCoverage;
 	@Transient
 	private double maxCoverage;
-	@Transient
 	private boolean active;
 	
 	public Module() {

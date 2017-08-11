@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -11,21 +13,28 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.tiagodeluna.insurance.domain.Insurance;
 
+@Component
 public class InsuranceRepositoryImpl implements InsuranceRepository {
 
-	private MongoClient mongoClient = null;
+	@Value("${mongodb.uri:test}")
+	private String connectionString;
+	@Value("${mongodb.database:test}")
+	private String dbName;
+	@Value("${mongodb.collection:test}")
+	private String collectionName;
 
+	private MongoClient mongoClient = null;
+	
 	public InsuranceRepositoryImpl() {
 		super();
 	}
 
 	private DBCollection getCollection() {
-		MongoClientURI uri = new MongoClientURI(
-				"mongodb://tiagodeluna:xWEVaVcE6o1IKZi5@lunacluster01-shard-00-00-rkwgc.mongodb.net:27017,lunacluster01-shard-00-01-rkwgc.mongodb.net:27017,lunacluster01-shard-00-02-rkwgc.mongodb.net:27017/root?ssl=true&replicaSet=LunaCluster01-shard-0&authSource=admin");
+		MongoClientURI uri = new MongoClientURI(connectionString);
 
 		mongoClient = new MongoClient(uri);
-		DB db = mongoClient.getDB( "insurancesDB" );
-		DBCollection dbCollection = db.getCollection("insurances");
+		DB db = mongoClient.getDB(dbName);
+		DBCollection dbCollection = db.getCollection(collectionName);
 
 		return dbCollection;
 	}

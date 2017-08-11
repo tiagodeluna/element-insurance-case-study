@@ -21,10 +21,9 @@ public class InsuranceServiceTest {
 	
 	@Before
 	public void init() {
-		this.insuranceService = new InsuranceService();
 
 		this.insuranceRepository = EasyMock.createMock(InsuranceRepositoryImpl.class);
-		this.insuranceService.setInsuranceRepository(this.insuranceRepository);
+		this.insuranceService = new InsuranceService(this.insuranceRepository);
 	}
 	
 	@Test

@@ -2,18 +2,22 @@ package com.tiagodeluna.insurance.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tiagodeluna.insurance.domain.Insurance;
 import com.tiagodeluna.insurance.domain.Module;
 import com.tiagodeluna.insurance.domain.ModuleType;
 import com.tiagodeluna.insurance.persistence.InsuranceRepository;
-import com.tiagodeluna.insurance.persistence.InsuranceRepositoryImpl;
 
+@Component
 public class InsuranceService {
 	
 	private InsuranceRepository insuranceRepository;
 
-	public InsuranceService() {
-		insuranceRepository = new InsuranceRepositoryImpl();
+	@Autowired
+	public InsuranceService(InsuranceRepository insuranceRepository) {
+		this.insuranceRepository = insuranceRepository;
 	}
 	
 	public Insurance newInsurance() {
@@ -43,10 +47,10 @@ public class InsuranceService {
 	public List<Insurance> findAll() {
 		List<Insurance> insurances = insuranceRepository.findAll(); 
 		
-		insurances.forEach(i -> {
-			System.out.println(i);
-			i.getModules().forEach(System.out::println);
-		});
+//		insurances.forEach(i -> {
+//			System.out.println(i);
+//			i.getModules().forEach(System.out::println);
+//		});
 		
 		return insurances;
 	}
@@ -55,8 +59,4 @@ public class InsuranceService {
 		insuranceRepository.drop();
 	}
 
-	public void setInsuranceRepository(InsuranceRepository insuranceRepository) {
-		this.insuranceRepository = insuranceRepository;
-	}
-	
 }

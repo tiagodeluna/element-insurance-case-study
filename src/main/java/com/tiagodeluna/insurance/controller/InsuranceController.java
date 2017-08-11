@@ -4,59 +4,64 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.tiagodeluna.insurance.domain.Insurance;
 import com.tiagodeluna.insurance.service.InsuranceService;
 
-@Path("/insurance")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+@RestController
+@RequestMapping("api")
 public class InsuranceController {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(InsuranceController.class.getName());
 
 	private InsuranceService insuranceService;
 
-	public InsuranceController() {
+	@Autowired
+	public InsuranceController(InsuranceService insuranceService) {
 		super();
-		insuranceService = new InsuranceService();
+		this.insuranceService = insuranceService;
 	}
 	
-	@GET
+//	@RequestMapping("/greeting")
+//	public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
+//		return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, name));
+//	}
+	
+	@RequestMapping
 	public List<Insurance> getAll(){
 		return insuranceService.findAll();
 	}
 
-	@GET
-	@Path("/new")
+	@RequestMapping("/new")
 	public Insurance getNew() {
 		LOGGER.log(Level.FINE, "Instantiating new Insurance");
 		return insuranceService.newInsurance();
 	}
-
-	@POST
-	public Insurance save(Insurance insurance){
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public Insurance save(@RequestBody Insurance insurance){
 		LOGGER.log(Level.FINE, "Saving Insurance");
 		insuranceService.save(insurance);
 		return insuranceService.newInsurance();
 	}
-	
-	@POST
-	@Path("/calculate")
-	public Insurance calculate(Insurance insurance){
+
+	@RequestMapping(method=RequestMethod.POST, value="/calculate")
+	public Insurance calculate(@RequestBody Insurance insurance){
 		LOGGER.log(Level.FINE, "Calculating Insurance tariff");
 		insurance.calculateTariff();
 		return insurance;
 	}
-
-	public void setInsuranceService(InsuranceService insuranceService) {
-		this.insuranceService = insuranceService;
-	}
 	
+	@RequestMapping(method=RequestMethod.DELETE)
+	public void delete() {
+		LOGGER.log(Level.FINE, "Removing all Insurances");
+		insuranceService.deleteAll();
+	}
+
+
 }

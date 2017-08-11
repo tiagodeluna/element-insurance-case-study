@@ -78,7 +78,7 @@
 							<tr ng-repeat="insurance in insurances">
 								<td>{{insurance.clientName}}</td>
 								<td>
-									<span ng-repeat="module in insurance.modules"> {{module.name}}=${{module.coverage}} </span>
+									<span ng-repeat="module in insurance.modules" ng-if="module.active"> {{module.name}}=${{module.coverage}} / </span>
 								</td>
 								<td>${{insurance.tariff}}</td>
 							</tr>

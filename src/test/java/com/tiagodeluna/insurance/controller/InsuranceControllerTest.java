@@ -19,10 +19,8 @@ public class InsuranceControllerTest {
 	
 	@Before
 	public void init() {
-		this.insuranceController = new InsuranceController();
-		
 		this.insuranceService = EasyMock.createMock(InsuranceService.class);
-		this.insuranceController.setInsuranceService(this.insuranceService);
+		this.insuranceController = new InsuranceController(this.insuranceService);
 	}
 	
 	@Test
