@@ -1,5 +1,5 @@
 # Insurance Case Study
-Case Study developed as part of a coding challenge.
+Case Study developed as part of a code challenge.
 
 ## Tools
 * Eclipse Mars
@@ -21,3 +21,4 @@ Case Study developed as part of a coding challenge.
 1. Download the source-code.
 2. Build with Maven: *mvn clean install*.
 3. Run MyApplication.java as a Java Application.
+4. Access: *http://localhost:8080/*
